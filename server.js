@@ -4,10 +4,8 @@ const app=express();
 
 app.use(bodyparser.urlencoded({extended:true}))
 
-
-app.get('/',(req,res)=>{
-
-})
 app.post('/quotes',(req,res)=>{
 console.log(req.body)
 })
+
+const mongo_Client=require('mongodb').MongoClient
