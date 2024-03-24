@@ -31,10 +31,10 @@ MongoClient.connect('mongodb+srv://Hassnain_Ali:hassnain@cluster0.o3gnmyd.mongod
     //     });
     // });
     app.get('/', (req, res) => {
-      const Data=db.collection('quotes').find().toArray().then(results=>{
-        console.log("Results",results)
+    db.collection('quotes').find().toArray().then(results=>{
+    res.render('index.ejs',{quotes:results});
       });
-      console.log("Data",Data)
+     
       }
       );
   })
