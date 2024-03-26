@@ -5,8 +5,25 @@ const { MongoClient } = require('mongodb');
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
+const update=document.querySelector('#update-button')
+
+update.addEventListener('click',_=>{
+  fetch('/quotes',{
+    method:'put',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      name:'Hassnain Ali',
+      quotes:'I find your lack of faith disturbing.',
+    })
+  })
+})
+app.use(bodyParser.json());
+
+app.put('/quotes',(req,res)=>{
+  console.log("Request",req.body);
+})
 app.set('view engine','ejs');
 // MongoDB connection setup
 MongoClient.connect('mongodb+srv://Hassnain_Ali:hassnain@cluster0.o3gnmyd.mongodb.net/', {
@@ -16,20 +33,6 @@ MongoClient.connect('mongodb+srv://Hassnain_Ali:hassnain@cluster0.o3gnmyd.mongod
     console.log('Connected to Database');
     const db = client.db("CRUD_API");
     const quotes = db.collection('quotes');
-
-    // Define the route to handle POST requests to '/quotes'
-    // app.post('/quotes', (req, res) => {
-    //   // Insert the request body into the 'quotes' collection
-    //   quotes.insertOne(req.body)
-    //     .then(result => {
-    //       console.log(result);
-    //       res.status(200).send('Quote added successfully');
-    //     })
-    //     .catch(error => {
-    //       console.error('Error inserting quote:', error);
-    //       res.status(500).send('Internal Server Error');
-    //     });
-    // });
     app.get('/', (req, res) => {
     db.collection('quotes').find().toArray().then(results=>{
     res.render('index.ejs',{quotes:results});
@@ -44,6 +47,7 @@ MongoClient.connect('mongodb+srv://Hassnain_Ali:hassnain@cluster0.o3gnmyd.mongod
     process.exit(1);
   });
 
+  
 // Start the Express server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
