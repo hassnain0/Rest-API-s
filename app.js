@@ -1,9 +1,10 @@
+const bodyParser = require('body-parser');
 const express=require('express');
 const app=express();
 const port=5000;  
-app.get('/quotes',(req,res)=>{
-    res.send("This is Learning of API")
-});
+// app.get('/quotes',(req,res)=>{
+//     res.send("This is Learning of API")
+// });
 const start=async()=>{
     try{
            app.listen(port,()=>{
@@ -14,4 +15,8 @@ const start=async()=>{
         console.log("Error",err)
     }
 }
+app.use(bodyParser.json())
+app.put('./quotes',(req,res)=>{
+    console.log(req.body);
+})
 start();
