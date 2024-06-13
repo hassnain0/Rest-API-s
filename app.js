@@ -15,8 +15,8 @@ const start=async()=>{
         console.log("Error",err)
     }
 }
-app.use(bodyParser.json())
+
 app.put('./quotes',(req,res)=>{
-    console.log(req.body);
+    console.log("Request",req.body);
 })
 start();
